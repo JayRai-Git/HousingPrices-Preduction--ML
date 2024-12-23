@@ -51,45 +51,71 @@ import seaborn as sns
 
 #print(Train_data['BsmtQual'].unique())
 Train_data['BsmtQual'].fillna('Ex',inplace=True)
-Train_data['BsmtQual'].fillna('Ex',inplace=True)
+Test_data['BsmtQual'].fillna('Ex',inplace=True)
 
 print(Train_data['BsmtCond'].unique())
 Train_data['BsmtCond'].fillna('TA',inplace=True)
-Train_data['BsmtCond'].fillna('TA',inplace=True)
+Test_data['BsmtCond'].fillna('TA',inplace=True)
 
 print(Train_data['BsmtExposure'].unique())
 Train_data['BsmtExposure'].fillna('Gd',inplace=True)
-Train_data['BsmtExposure'].fillna('Gd',inplace=True)
+Test_data['BsmtExposure'].fillna('Gd',inplace=True)
 
 print(Train_data['BsmtFinType1'].unique())
 Train_data['BsmtFinType1'].fillna('Unf',inplace=True)
-Train_data['BsmtFinType1'].fillna('Unf',inplace=True)
+Test_data['BsmtFinType1'].fillna('Unf',inplace=True)
 
 print(Train_data['GarageType'].unique())
 Train_data['GarageType'].fillna('No',inplace=True)
-Train_data['GarageType'].fillna('No',inplace=True)
+Test_data['GarageType'].fillna('No',inplace=True)
 
 print(Train_data['GarageFinish'].unique())
 Train_data['GarageFinish'].fillna('Unf',inplace=True)
-Train_data['GarageFinish'].fillna('Unf',inplace=True)
+Test_data['GarageFinish'].fillna('Unf',inplace=True)
 
 print(Train_data['GarageQual'].unique())
 Train_data['GarageQual'].fillna('No',inplace=True)
-Train_data['GarageQual'].fillna('No',inplace=True)
+Test_data['GarageQual'].fillna('No',inplace=True)
 
 print("="*50)
 
 #print(Train_data['FireplaceQu'].unique())
 Train_data['FireplaceQu'].fillna('No',inplace=True)
-Train_data['FireplaceQu'].fillna('No',inplace=True)
+Test_data['FireplaceQu'].fillna('No',inplace=True)
 #sns.catplot(data=Train_data, x='FireplaceQu', y='SalePrice', kind='box')
 
 #print(Train_data['MasVnrType'].unique())
 Train_data['MasVnrType'].fillna('No',inplace=True)
-Train_data['MasVnrType'].fillna('No',inplace=True)
+Test_data['MasVnrType'].fillna('No',inplace=True)
 #sns.catplot(data=Train_data, x='MasVnrType', y='SalePrice', kind='box')
 
 print(Train_data['GarageQual'].unique())
 Train_data['GarageQual'].fillna('No',inplace=True)
-Train_data['GarageQual'].fillna('No',inplace=True)
+Test_data['GarageQual'].fillna('No',inplace=True)
 sns.catplot(data=Train_data, x='GarageQual', y='SalePrice', kind='box')
+
+#______________________________________featureEngerining___________________________________
+Train_data['houseAge']=Train_data['YrSold']-Train_data['YearBuilt']
+Test_data['houseAge']=Test_data['YrSold']-Test_data['YearBuilt']
+
+Train_data['houseModelAge']=Train_data['YrSold']-Train_data['YearRemodAdd']
+Test_data['houseModelAge']=Test_data['YrSold']-Test_data['YearRemodAdd']
+
+Train_data['TotalSF']=Train_data['1stFlrSF']+Train_data['2ndFlrSF']+Train_data['BsmtFinSF1']+Train_data['BsmtFinSF2']
+Test_data['TotalSF']=Test_data['1stFlrSF']+Test_data['2ndFlrSF']+Test_data['BsmtFinSF1']+Test_data['BsmtFinSF2']
+
+Train_data['TotalArea']=Train_data['GrLivArea']+Train_data['TotalBsmtSF']
+Test_data['TotalArea']=Test_data['GrLivArea']+Test_data['TotalBsmtSF']
+
+Train_data['TotalBath']=Train_data['BsmtFullBath']+Train_data['FullBath']+0.5*(Train_data['BsmtHalfBath']+Train_data['HalfBath'])
+Test_data['TotalBath']=Test_data['BsmtFullBath']+Test_data['FullBath']+0.5*(Test_data['BsmtHalfBath']+Test_data['HalfBath'])
+
+Train_data['TotalPorchSF']=Train_data['3SsnPorch']+Train_data['OpenPorchSF']+Train_data['EnclosedPorch']+Train_data['ScreenPorch']
+Test_data['TotalPorchSF']=Test_data['3SsnPorch']+Test_data['OpenPorchSF']+Test_data['EnclosedPorch']+Test_data['ScreenPorch']
+
+
+#______________________________________________Droping datas who has large no of Null Values____________________________________________________________
+Train_data=Train_data.drop(columns=['Id','YrSold','YearBuilt','YearRemodAdd','1stFlrSF','2ndFlrSF','BsmtFinSF1','BsmtFinSF2','GrLivArea','TotalBsmtSF','BsmtFullBath','FullBath','BsmtHalfBath','HalfBath','3SsnPorch','OpenPorchSF','EnclosedPorch','ScreenPorch'])
+Test_data=Test_data.drop(columns=['Id','YrSold','YearBuilt','YearRemodAdd','1stFlrSF','2ndFlrSF','BsmtFinSF1','BsmtFinSF2','GrLivArea','TotalBsmtSF','BsmtFullBath','FullBath','BsmtHalfBath','HalfBath','3SsnPorch','OpenPorchSF','EnclosedPorch','ScreenPorch'])
+print(Train_data.columns)
+print(Train_data)
